@@ -15,7 +15,9 @@ export const registerUser = catchAsyncError(async (req, res, next) => {
     "Name : " + name + "    Email : " + email + "      password : " + password
   );
   const file = req.file;
-  console.log("File : " + file);
+
+  console.log("File : " + req.body.file);
+
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please add all fields", 401));
 
