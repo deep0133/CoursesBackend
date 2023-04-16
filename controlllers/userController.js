@@ -10,13 +10,7 @@ import getDataUri from "../utils/DataUrl.js";
 import Stats from "../models/Stats.js";
 
 export const registerUser = catchAsyncError(async (req, res, next) => {
-  const { name, email, password } = req.body;
-  console.log(
-    "Name : " + name + "    Email : " + email + "      password : " + password
-  );
-  const file = req.file;
-
-  console.log("File : " + req.body.file);
+  const { name, email, password, file } = req.body;
 
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please add all fields", 401));
