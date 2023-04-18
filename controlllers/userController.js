@@ -10,15 +10,8 @@ import getDataUri from "../utils/DataUrl.js";
 import Stats from "../models/Stats.js";
 
 export const registerUser = catchAsyncError(async (req, res, next) => {
-  const { name, email, password, file } = req.body;
-
-  console.log(
-    "Register   body file type is : " +
-      typeof file +
-      "   req.file is : " +
-      typeof req.file
-  );
-  file = req.file || file;
+  const { name, email, password } = req.body;
+  const file = req.file;
 
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please add all fields", 401));
@@ -28,14 +21,9 @@ export const registerUser = catchAsyncError(async (req, res, next) => {
   if (user) return next(new ErrorHandler("User Already Exist", 409));
 
   const fileUri = getDataUri(file);
-  console.log(
-    " GetDataUri working: File : " + file + "  File Uri : " + fileUri.content
-  );
   const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
     folder: "users",
   });
-
-  console.log("myCloud uploaded file: ");
 
   user = await User.create({
     name,
