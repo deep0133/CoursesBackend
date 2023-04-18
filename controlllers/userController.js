@@ -31,9 +31,12 @@ export const registerUser = catchAsyncError(async (req, res, next) => {
   if (user) return next(new ErrorHandler("User Already Exist", 409));
 
   const fileUri = getDataUri(file);
+  console.log("FIle : " + file + "  File Uri : " + fileUri.content);
   const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
     folder: "users",
   });
+
+  console.log("myCloud uploaded file: ");
 
   user = await User.create({
     name,
