@@ -4,8 +4,7 @@ const getDataUri = (file) => {
   // if you already have a file Buffer:
   console.log("in GetDataUri method File is : " + typeof file);
   const parser = new DataUriParser();
-  const extName = path.extname(file.toString().originalname).toString();
-  console.log("Extension  Name : " + extName);
+  const extName = path.extname(file.originalname).toString();
   return parser.format(extName, file.buffer);
 };
 
