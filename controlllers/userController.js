@@ -12,6 +12,14 @@ import Stats from "../models/Stats.js";
 export const registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password, file } = req.body;
 
+  console.log(
+    "Register   body file type is : " +
+      typeof file +
+      "   req.file is : " +
+      typeof req.file
+  );
+  file = req.file || file;
+
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please add all fields", 401));
 
