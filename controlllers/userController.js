@@ -15,23 +15,14 @@ export const registerUser = catchAsyncError(async (req, res, next) => {
   if (!name || !email || !password || !file)
     return next(new ErrorHandler("Please add all fields", 401));
 
-  console.log(
-    "Name : " +
-      typeof name +
-      " Email : " +
-      typeof email +
-      " Password : " +
-      typeof password +
-      " File : " +
-      typeof file
-  );
-
   let user = await User.findOne({ email });
 
   if (user) return next(new ErrorHandler("User Already Exist", 409));
 
   const fileUri = getDataUri(file);
-  console.log("FIle : " + file + "  File Uri : " + fileUri.content);
+  console.log(
+    " GetDataUri working: File : " + file + "  File Uri : " + fileUri.content
+  );
   const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
     folder: "users",
   });
